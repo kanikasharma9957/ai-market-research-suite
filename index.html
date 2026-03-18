@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Market Research Tool</title>
+</head>
+
+<body>
+
+<h1>AI Market Research Insight Generator</h1>
+
+<input id="industry" placeholder="Industry">
+<input id="country" placeholder="Country">
+<input id="keyword" placeholder="Keyword">
+<input id="url" placeholder="Report URL">
+
+<button onclick="generate()">Generate</button>
+
+<pre id="result"></pre>
+
+<script>
+async function generate() {
+
+const industry = document.getElementById("industry").value;
+const country = document.getElementById("country").value;
+const keyword = document.getElementById("keyword").value;
+const url = document.getElementById("url").value;
+
+const response = await fetch("/.netlify/functions/generate", {
+method: "POST",
+body: JSON.stringify({industry, country, keyword, url})
+});
+
+const data = await response.json();
+
+document.getElementById("result").innerText = data.result;
+
+}
+</script>
+
+</body>
+</html>
