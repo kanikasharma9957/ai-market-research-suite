@@ -5,14 +5,12 @@ const { industry, country, keyword, url } = JSON.parse(event.body);
 const prompt = `
 You are an expert market research analyst.
 
-Generate:
-
 Industry: ${industry}
 Country: ${country}
 Keyword: ${keyword}
 URL: ${url}
 
-Include:
+Generate:
 1. Market Overview
 2. Trends & Drivers
 3. Opportunities
@@ -38,6 +36,16 @@ temperature: 0.7
 
 const data = await response.json();
 
+// 🔍 Debug check
+if (!data.choices) {
+return {
+statusCode: 200,
+body: JSON.stringify({
+result: "API Error: " + JSON.stringify(data)
+})
+};
+}
+
 return {
 statusCode: 200,
 body: JSON.stringify({
@@ -50,7 +58,7 @@ result: data.choices[0].message.content
 return {
 statusCode: 500,
 body: JSON.stringify({
-result: "Error: " + error.message
+result: "Server Error: " + error.message
 })
 };
 
